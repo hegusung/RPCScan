@@ -10,6 +10,8 @@ This tool currently has the following features:
 
 ## RPCScan Usage
 
+If the 'insecure' paramater is not set on the NFS server configuration, it will be necessary to run the script as root because the NFS server will check whether the incomming communication comes from a source port <= 1024 when connecting with uid=0 (root).
+
 ### rpc-scan.py
 
 #### Listing RPC services
