@@ -1,5 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 # coding: utf-8
+import sys
 import time
 import argparse
 from urllib.parse import urlparse
@@ -21,6 +22,11 @@ def main():
     parser.add_argument('-t', help='timeout', nargs='?', default=15, type=int, dest='timeout')
 
     args = parser.parse_args()
+
+    if args.nfs_path == None:
+        parser.print_help()
+        sys.exit()
+
     nfs_path = args.nfs_path
     timeout = args.timeout
 

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -
-
+import sys
 import struct
 import time
 from ipaddress import IPv4Network
@@ -152,6 +152,10 @@ def main():
 
 
     args = parser.parse_args()
+
+    if args.ip_range == None and args.host_file == None:
+        parser.print_help()
+        sys.exit()
 
     port = args.port
 
