@@ -44,7 +44,7 @@ def main():
 
     o = urlparse(nfs_path)
 
-    host = o.netloc
+    host = o.hostname
     uri = o.path
 
     portmapper_port = 111
@@ -63,6 +63,7 @@ def main():
             mount_path = mountpoint["path"]
             file_handle = mount.mnt(mountpoint["path"])["file_handle"]
             file_type = 2
+            break
 
     if file_handle == None:
         mount.disconnect()
