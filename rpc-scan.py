@@ -75,7 +75,10 @@ def listdir(nfs, auth, file_handle, path, recurse=1):
     if recurse == 0:
         return [path + "/"]
 
-    items = nfs.readdirplus(file_handle, auth=auth)
+    try:
+        items = nfs.readdirplus(file_handle, auth=auth)
+    except NFSAccessError:
+        return []
 
     if len(items) == 0:
         return [path + "/"]
