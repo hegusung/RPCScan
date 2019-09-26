@@ -175,7 +175,10 @@ class NFS(RPC):
             name_len = struct.unpack("!L", data[:4])[0]
             data = data[4:]
 
-            name = data[:name_len].decode()
+            try:
+                name = data[:name_len].decode()
+            except UnicodeDecodeError:
+                name = ""
             data = data[name_len:]
             data = data[(4-name_len % 4)%4:]
 
