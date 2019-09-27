@@ -104,16 +104,25 @@ class RPC(object):
                 data += response[4:]
 
             rpc = data[:24]
+            # parse the beginning of the reply body
             (
                 rpc_XID,
                 rpc_Message_Type,
                 rpc_Reply_State,
+            ) = struct.unpack('!LLL', rpc[:12])
+
+            if rpc_Message_Type != 1 or rpc_Reply_State != 0:
+                raise Exception("RPC protocol error")
+
+            # parse the remaining only if it is an accepted reply (rpc_Reply_State=0),
+            # because it does not exist otherwise
+            (
                 rpc_Verifier_Flavor,
                 rpc_Verifier_Length,
                 rpc_Accept_State
-            ) = struct.unpack('!LLLLLL', rpc)
+            ) = struct.unpack('!LLL', rpc[12:])
 
-            if rpc_Message_Type != 1 or rpc_Reply_State != 0 or rpc_Accept_State != 0:
+            if rpc_Accept_State != 0:
                 raise Exception("RPC protocol error")
 
             data = data[24:]
